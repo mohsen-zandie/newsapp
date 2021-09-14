@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.komozan.newsapp.R
 import com.komozan.newsapp.data.util.Resource
@@ -33,6 +34,12 @@ class NewsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         newsAdapter = (activity as MainActivity).newsAdapter
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("selected_article", it)
+            }
+            findNavController().navigate(R.id.action_newsFragment_to_newsContentFragment, bundle)
+        }
         binding = FragmentNewsBinding.bind(view)
         initRecyclerView()
         viewNewsList()
