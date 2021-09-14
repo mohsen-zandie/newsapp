@@ -4,5 +4,5 @@ import com.komozan.newsapp.data.model.response.everything.EverythingResponse
 import retrofit2.Response
 
 interface NewsRemoteDataSource {
-    suspend fun getTopHeadlines(): Response<EverythingResponse>
+    suspend fun getTopHeadlines(country: String, page: Int): Response<EverythingResponse>
 }

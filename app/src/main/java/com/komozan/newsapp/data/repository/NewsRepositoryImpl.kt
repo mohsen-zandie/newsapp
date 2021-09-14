@@ -7,12 +7,15 @@ import com.komozan.newsapp.domain.repository.NewsRepository
 import retrofit2.Response
 
 class NewsRepositoryImpl(private val remoteDataSource: NewsRemoteDataSource) : NewsRepository {
-    override suspend fun getNewsHeadlines(): Resource<EverythingResponse> {
-        return responseToResource(remoteDataSource.getTopHeadlines())
+    override suspend fun getNewsHeadlines(
+        country: String,
+        page: Int
+    ): Resource<EverythingResponse> {
+        return responseToResource(remoteDataSource.getTopHeadlines(country, page))
     }
 
     private fun responseToResource(response: Response<EverythingResponse>): Resource<EverythingResponse> {
-        if(response.isSuccessful){
+        if (response.isSuccessful) {
             response.body()?.let { result ->
                 return Resource.Success(result)
             }
