@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -35,9 +36,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def gson_version = "2.8.6"
     def retrofit_version = "2.9.0"
     def mock_web_server = "4.9.1"
@@ -46,6 +51,7 @@ dependencies {
     def okhttp_version = "4.9.0"
     def lifecycle_version = "2.3.1"
     def hilt_version = "2.38.1"
+    def nav_version = "2.3.5"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
@@ -82,6 +88,9 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
 
 }
