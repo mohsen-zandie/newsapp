@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">News App</string>
     <string name="network_connection_error">Internet is not available</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="news_headline">News Headline</string>
+    <string name="news_agencies">News Agencies</string>
 </resources>
