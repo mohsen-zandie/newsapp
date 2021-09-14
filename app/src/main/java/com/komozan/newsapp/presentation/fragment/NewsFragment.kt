@@ -18,7 +18,7 @@ class NewsFragment : Fragment() {
 
     private lateinit var viewModel: NewsViewModel
     private lateinit var binding: FragmentNewsBinding
-    private lateinit var myAdapter: NewsAdapter
+    private lateinit var newsAdapter: NewsAdapter
     private val country = "us"
     private val page = 1
 
@@ -32,6 +32,7 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
+        newsAdapter = (activity as MainActivity).newsAdapter
         binding = FragmentNewsBinding.bind(view)
         initRecyclerView()
         viewNewsList()
@@ -44,7 +45,7 @@ class NewsFragment : Fragment() {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let {
-                        myAdapter.differ.submitList(it.articles.toList())
+                        newsAdapter.differ.submitList(it.articles.toList())
                     }
                 }
                 is Resource.Error -> {
@@ -65,9 +66,8 @@ class NewsFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        myAdapter = NewsAdapter()
         binding.recyclerView.apply {
-            adapter = myAdapter
+            adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
