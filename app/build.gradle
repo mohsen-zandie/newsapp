@@ -38,6 +38,10 @@ android {
 dependencies {
     def gson_version = "2.8.6"
     def retrofit_version = "2.9.0"
+    def mock_web_server = "4.9.1"
+    def coroutine_version = "1.5.0"
+    def truth_version = "1.1.3"
+    def okhttp_version = "4.9.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
@@ -45,6 +49,11 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     testImplementation 'junit:junit:4.+'
+    //Mock Web Server
+    testImplementation("com.squareup.okhttp3:mockwebserver:$mock_web_server")
+    //Truth lib
+    testImplementation "com.google.truth:truth:$truth_version"
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
@@ -53,5 +62,10 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // Coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
+    //Okhttp
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
 
 }
