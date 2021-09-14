@@ -18,7 +18,11 @@
         android:id="@+id/newsContentFragment"
         android:name="com.komozan.newsapp.presentation.fragment.NewsContentFragment"
         android:label="fragment_news_content"
-        tools:layout="@layout/fragment_news_content" />
+        tools:layout="@layout/fragment_news_content" >
+        <argument
+            android:name="selected_article"
+            app:argType="com.komozan.newsapp.data.model.response.everything.Article" />
+    </fragment>
     <fragment
         android:id="@+id/newsAgenciesFragment"
         android:name="com.komozan.newsapp.presentation.fragment.NewsAgenciesFragment"
