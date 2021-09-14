@@ -9,9 +9,9 @@ import com.bumptech.glide.Glide
 import com.komozan.newsapp.data.model.response.everything.Article
 import com.komozan.newsapp.databinding.NewsListItemBinding
 
-class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>(){
+class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    private val callback = object : DiffUtil.ItemCallback<Article>(){
+    private val callback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
         }
@@ -25,7 +25,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>(){
     val differ = AsyncListDiffer(this, callback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val binding = NewsListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            NewsListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NewsViewHolder(binding)
     }
 
@@ -49,8 +50,18 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>(){
             Glide.with(binding.articleImage.context).load(article.urlToImage)
                 .into(binding.articleImage)
 
+            binding.root.setOnClickListener {
+                onItemClickListener?.let {
+                    it(article)
+                }
+            }
         }
 
     }
 
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(clickListener: (Article) -> Unit) {
+        onItemClickListener = clickListener
+    }
 }
