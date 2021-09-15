@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_newsFragment_to_newsContentFragment"
             app:destination="@id/newsContentFragment" />
+        <argument android:name="selected_agency"
+            android:defaultValue=""
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/newsContentFragment"
@@ -27,7 +30,11 @@
         android:id="@+id/newsAgenciesFragment"
         android:name="com.komozan.newsapp.presentation.fragment.NewsAgenciesFragment"
         android:label="fragment_news_agencies"
-        tools:layout="@layout/fragment_news_agencies" />
+        tools:layout="@layout/fragment_news_agencies" >
+        <action
+            android:id="@+id/action_newsAgenciesFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
+    </fragment>
 
 
 </navigation>
