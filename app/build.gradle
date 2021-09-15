@@ -5,7 +5,8 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'androidx.navigation.safeargs'
 }
-
+def appName = "NewsApp"
+def newName
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -22,11 +23,30 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        Omen {
+            keyAlias 'Omen'
+            keyPassword "Omen@parham"
+            storeFile file("Signing_Key/Omen.jks")
+            storePassword "Omen@parham"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def date = new Date()
+                    def formattedDate = date.format('MM-dd')
+                    newName = "${appName}-release-${formattedDate}.apk"
+                    outputFileName = "${variant.name}-${variant.versionName}.apk"
+                    outputFileName = newName
+                }
+            }
+            signingConfig signingConfigs.Omen
         }
     }
     compileOptions {
