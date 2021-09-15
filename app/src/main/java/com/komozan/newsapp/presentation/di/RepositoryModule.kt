@@ -1,6 +1,7 @@
 package com.komozan.newsapp.presentation.di
 
 import com.komozan.newsapp.data.repository.NewsRepositoryImpl
+import com.komozan.newsapp.data.repository.datasource.NewsDataLocalDataSource
 import com.komozan.newsapp.data.repository.datasource.NewsRemoteDataSource
 import com.komozan.newsapp.domain.repository.NewsRepository
 import dagger.Module
@@ -15,7 +16,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepositoryModule(remoteDataSource: NewsRemoteDataSource): NewsRepository {
-        return NewsRepositoryImpl(remoteDataSource)
+    fun provideNewsRepositoryModule(remoteDataSource: NewsRemoteDataSource, localDataSource: NewsDataLocalDataSource): NewsRepository {
+        return NewsRepositoryImpl(remoteDataSource, localDataSource)
     }
 }
