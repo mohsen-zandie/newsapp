@@ -1,12 +1,15 @@
 package com.komozan.newsapp.presentation.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.komozan.newsapp.R
 import com.komozan.newsapp.data.util.Resource
@@ -38,15 +41,24 @@ class NewsFragment : Fragment() {
             val bundle = Bundle().apply {
                 putSerializable("selected_article", it)
             }
+            (activity as MainActivity).slideDown()
             findNavController().navigate(R.id.action_newsFragment_to_newsContentFragment, bundle)
         }
+        (activity as MainActivity).slideUp()
+
         binding = FragmentNewsBinding.bind(view)
         initRecyclerView()
+        val args: NewsFragmentArgs by navArgs()
+        val selectedAgency = args.selectedAgency
+        if (TextUtils.isEmpty(selectedAgency)) {
+            viewModel.getNewsHeadlines(country, page)
+        } else {
+            viewModel.getSpecifiedNewsAgency(selectedAgency)
+        }
         viewNewsList()
     }
 
     private fun viewNewsList() {
-        viewModel.getNewsHeadlines(country, page)
         viewModel.newsHeadline.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is Resource.Success -> {
@@ -56,8 +68,9 @@ class NewsFragment : Fragment() {
                     }
                 }
                 is Resource.Error -> {
-                    response.data?.let {
-                        showMessage(it.toString())
+                    hideProgressBar()
+                    response.message?.let {
+                        showMessage(it)
                     }
                 }
                 is Resource.Loading -> {
@@ -69,7 +82,6 @@ class NewsFragment : Fragment() {
 
     private fun showMessage(message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
-
     }
 
     private fun initRecyclerView() {
